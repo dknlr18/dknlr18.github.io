@@ -3,8 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dinesh Kumar</title>
-  <meta name="description" content="Dinesh Kumar — software engineer who loves food, badminton, and somehow always flying to India." />
+  <title>Dinesh Kumar | Software Engineer in London</title>
+  <meta name="description" content="Dinesh Kumar — software engineer at Meta (ex-Amazon) in London. Loves food, badminton, and somehow always flying to India." />
+  <meta name="theme-color" content="#0f171e" />
+  <link rel="canonical" href="https://dknlr18.github.io/" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Ctext%20y='.9em'%20font-size='90'%3E🍿%3C/text%3E%3C/svg%3E" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Dinesh Kumar | Software Engineer in London" />
+  <meta property="og:description" content="Software engineer at Meta (ex-Amazon). Loves food, badminton, and somehow always flying to India." />
+  <meta property="og:url" content="https://dknlr18.github.io/" />
+  <meta property="og:image" content="https://dknlr18.github.io/me.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Dinesh Kumar | Software Engineer in London" />
+  <meta name="twitter:description" content="Software engineer at Meta (ex-Amazon). Loves food, badminton, and somehow always flying to India." />
+  <meta name="twitter:image" content="https://dknlr18.github.io/me.jpg" />
+
   <style>
     :root {
       --bg: #0f171e;          /* Prime Video deep navy-black */
@@ -27,6 +42,11 @@
     }
     a { text-decoration: none; color: inherit; }
 
+    /* visible keyboard focus everywhere */
+    a:focus-visible, .btn:focus-visible, .track:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 6px;
+    }
+
     /* ---- Top nav ---- */
     nav {
       position: sticky; top: 0; z-index: 50;
@@ -35,32 +55,30 @@
       background: linear-gradient(180deg, rgba(10,17,23,0.95), rgba(10,17,23,0.6) 70%, transparent);
       backdrop-filter: blur(6px);
     }
-    .logo { display: inline-flex; align-items: baseline; gap: 6px; font-weight: 800; font-size: 1.25rem; letter-spacing: -0.01em; }
+    .logo { flex: 0 0 auto; display: inline-flex; align-items: baseline; gap: 6px; font-weight: 800; font-size: 1.25rem; letter-spacing: -0.01em; }
     .logo .pv { color: #fff; }
     .logo .smile { color: var(--accent-2); }
     nav .menu { display: flex; gap: 22px; color: var(--muted); font-size: 0.92rem; font-weight: 600; }
+    nav .menu a { white-space: nowrap; }
     nav .menu a:hover { color: #fff; }
-    @media (max-width: 640px) { nav .menu { display: none; } nav { padding: 12px 20px; } }
 
     /* ---- Billboard hero ---- */
     .billboard {
       position: relative;
-      min-height: 78vh;
+      min-height: 78svh;
       display: flex; align-items: flex-end;
       padding: 0 40px 64px;
       overflow: hidden;
+      background: var(--bg);
     }
-    /* photo anchored to the right, dark panel filled on the left */
-    .billboard-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background-color: var(--bg);
-      background-image: url("me.jpg");
-      background-repeat: no-repeat;
-      background-position: right center;
-      background-size: auto 118%;
+    /* real <img> for alt text + LCP priority; anchored right, dark panel on the left */
+    .billboard-photo {
+      position: absolute; z-index: 0;
+      top: 50%; right: 0; transform: translateY(-50%);
+      height: 118%; width: auto; max-width: none;
     }
     /* gradient blends the seam, darkens the left for text, and fades into the page */
-    .scrim {
+    .billboard-scrim {
       position: absolute; inset: 0; z-index: 1;
       background:
         radial-gradient(85% 78% at 4% 92%, rgba(10,17,23,0.85) 0%, rgba(10,17,23,0.5) 40%, transparent 64%),
@@ -68,12 +86,15 @@
         linear-gradient(0deg, var(--bg) 0%, rgba(15,23,30,0.72) 16%, transparent 55%);
     }
     @media (max-width: 700px) {
-      .billboard-bg { background-size: cover; background-position: center 45%; }
-      .scrim { background:
+      .billboard-photo {
+        top: 0; left: 0; transform: none;
+        width: 100%; height: 100%; object-fit: cover; object-position: center 35%;
+      }
+      .billboard-scrim { background:
         linear-gradient(0deg, var(--bg) 2%, rgba(10,17,23,0.78) 32%, transparent 72%),
         linear-gradient(90deg, rgba(10,17,23,0.6) 0%, transparent 82%); }
     }
-    .billboard-content { position: relative; z-index: 1; max-width: 640px; }
+    .billboard-content { position: relative; z-index: 2; max-width: 640px; }
     .badge {
       display: inline-flex; align-items: center; gap: 7px;
       font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
@@ -103,19 +124,19 @@
     .row h2 { font-size: 1.25rem; font-weight: 700; margin: 0 0 16px; padding: 0 40px; }
     .track {
       display: flex; gap: 14px; overflow-x: auto; padding: 6px 40px 18px;
-      scroll-snap-type: x proximity; scrollbar-width: none;
+      scroll-snap-type: x proximity; scroll-padding-left: 40px; scrollbar-width: none;
     }
     .track::-webkit-scrollbar { display: none; }
     .tile {
       position: relative; flex: 0 0 auto; width: 270px; aspect-ratio: 16/9;
-      border-radius: 12px; overflow: hidden; scroll-snap-align: start;
+      border-radius: 8px; overflow: hidden; scroll-snap-align: start;
       border: 1px solid var(--border);
       transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
       cursor: default;
     }
-    .tile:hover { transform: scale(1.06); z-index: 5; border-color: var(--accent); box-shadow: 0 14px 40px rgba(0,0,0,0.55); }
+    .tile:hover { transform: scale(1.04); z-index: 5; border-color: var(--accent); box-shadow: 0 14px 40px rgba(0,0,0,0.55); }
     .tile .art { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 3.6rem; }
-    .tile .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.85)); }
+    .tile-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.85)); }
     .tile .label { position: absolute; left: 14px; right: 14px; bottom: 12px; z-index: 2; }
     .tile .label .t { font-weight: 800; font-size: 1.05rem; }
     .tile .label .c { font-size: 0.86rem; color: var(--muted); margin-top: 2px; line-height: 1.35; }
@@ -131,11 +152,23 @@
 
     footer { padding: 50px 40px 60px; color: var(--muted); font-size: 0.85rem; }
     footer .dot { color: var(--accent); }
+
     @media (max-width: 640px) {
-      .billboard { padding: 0 20px 48px; }
-      .row h2, .track, footer { padding-left: 20px; padding-right: 20px; }
-      .track { padding-bottom: 18px; }
-      .tile { width: 220px; }
+      nav { padding: 12px 16px; gap: 14px; }
+      nav .menu { gap: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      nav .menu::-webkit-scrollbar { display: none; }
+      .billboard { padding: 0 20px 44px; }
+      .row h2 { padding: 0 20px; }
+      .track { padding-left: 20px; padding-right: 20px; padding-bottom: 18px; scroll-padding-left: 20px; }
+      footer { padding: 40px 20px 56px; }
+      .tile { width: min(78vw, 280px); }
+    }
+
+    /* respect reduced-motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .wave { animation: none; }
+      *, *::before, *::after { transition: none !important; }
     }
   </style>
 </head>
@@ -153,8 +186,8 @@
 
   <!-- ===== Billboard hero ===== -->
   <header class="billboard">
-    <div class="billboard-bg"></div>
-    <div class="scrim"></div>
+    <img class="billboard-photo" src="me.jpg" alt="Dinesh Kumar standing outdoors on a snowy day" fetchpriority="high" decoding="async" />
+    <div class="billboard-scrim"></div>
     <div class="billboard-content">
       <span class="badge">★ Featured Title</span>
       <h1>Dinesh Kumar <span class="wave">👋</span></h1>
@@ -178,36 +211,36 @@
 
   <!-- ===== Row: The story so far ===== -->
   <section class="row" id="about">
-    <h2>The story so far</h2>
-    <div class="track">
-      <article class="tile g2"><div class="art">💻</div><div class="scrim"></div><div class="label"><div class="t">At Meta</div><div class="c">Software engineer building behind-the-scenes systems.</div></div></article>
-      <article class="tile g6"><div class="art">📦</div><div class="scrim"></div><div class="label"><div class="t">ex-Amazon</div><div class="c">Years on Prime Video & subscriptions stacks.</div></div></article>
-      <article class="tile g3"><div class="art">🏡</div><div class="scrim"></div><div class="label"><div class="t">From Nellore</div><div class="c">Spent most of my life in India.</div></div></article>
-      <article class="tile g2"><div class="art">🇬🇧</div><div class="scrim"></div><div class="label"><div class="t">4 years in London</div><div class="c">Current home base.</div></div></article>
-      <article class="tile g5"><div class="art">✈️</div><div class="scrim"></div><div class="label"><div class="t">Always flying to India</div><div class="c">Plan Korea/China/Japan… land in India. Every time. 🙃</div></div></article>
+    <h2 id="row-story">The story so far</h2>
+    <div class="track" tabindex="0" role="region" aria-labelledby="row-story">
+      <article class="tile g2"><div class="art" aria-hidden="true">💻</div><div class="tile-scrim"></div><div class="label"><div class="t">At Meta</div><div class="c">Software engineer building behind-the-scenes systems.</div></div></article>
+      <article class="tile g6"><div class="art" aria-hidden="true">📦</div><div class="tile-scrim"></div><div class="label"><div class="t">ex-Amazon</div><div class="c">Years on Prime Video & subscriptions stacks.</div></div></article>
+      <article class="tile g3"><div class="art" aria-hidden="true">🏡</div><div class="tile-scrim"></div><div class="label"><div class="t">From Nellore</div><div class="c">Spent most of my life in India.</div></div></article>
+      <article class="tile g2"><div class="art" aria-hidden="true">🇬🇧</div><div class="tile-scrim"></div><div class="label"><div class="t">4 years in London</div><div class="c">Current home base.</div></div></article>
+      <article class="tile g5"><div class="art" aria-hidden="true">✈️</div><div class="tile-scrim"></div><div class="label"><div class="t">Always flying to India</div><div class="c">Plan Korea/China/Japan… land in India. Every time. 🙃</div></div></article>
     </div>
   </section>
 
   <!-- ===== Row: Outside of work ===== -->
   <section class="row" id="life">
-    <h2>Outside of work</h2>
-    <div class="track">
-      <article class="tile g1"><div class="art">🏏</div><div class="scrim"></div><div class="label"><div class="t">Cricket</div><div class="c">Love it… not very good. Watching counts, right?</div></div></article>
-      <article class="tile g6"><div class="art">🏸</div><div class="scrim"></div><div class="label"><div class="t">Badminton</div><div class="c">My actual game — this one I can play.</div></div></article>
-      <article class="tile g3"><div class="art">🧗</div><div class="scrim"></div><div class="label"><div class="t">Bouldering</div><div class="c">Just started. Mostly falling, but it's fun.</div></div></article>
-      <article class="tile g4"><div class="art">🛋️</div><div class="scrim"></div><div class="label"><div class="t">Lazy weekends</div><div class="c">I'd love to travel more… but really I just stay home or play sports.</div></div></article>
-      <article class="tile g5"><div class="art">🍜</div><div class="scrim"></div><div class="label"><div class="t">Food</div><div class="c">Above all else — I love food.</div></div></article>
+    <h2 id="row-life">Outside of work</h2>
+    <div class="track" tabindex="0" role="region" aria-labelledby="row-life">
+      <article class="tile g1"><div class="art" aria-hidden="true">🏏</div><div class="tile-scrim"></div><div class="label"><div class="t">Cricket</div><div class="c">Love it… not very good. Watching counts, right?</div></div></article>
+      <article class="tile g6"><div class="art" aria-hidden="true">🏸</div><div class="tile-scrim"></div><div class="label"><div class="t">Badminton</div><div class="c">My actual game — this one I can play.</div></div></article>
+      <article class="tile g3"><div class="art" aria-hidden="true">🧗</div><div class="tile-scrim"></div><div class="label"><div class="t">Bouldering</div><div class="c">Just started. Mostly falling, but it's fun.</div></div></article>
+      <article class="tile g4"><div class="art" aria-hidden="true">🛋️</div><div class="tile-scrim"></div><div class="label"><div class="t">Lazy weekends</div><div class="c">I'd love to travel more… but really I just stay home or play sports.</div></div></article>
+      <article class="tile g5"><div class="art" aria-hidden="true">🍜</div><div class="tile-scrim"></div><div class="label"><div class="t">Food</div><div class="c">Above all else — I love food.</div></div></article>
     </div>
   </section>
 
   <!-- ===== Row: What I'm watching ===== -->
   <section class="row" id="watch">
-    <h2>What I'm watching</h2>
-    <div class="track">
-      <article class="tile g3"><div class="art">🎬</div><div class="scrim"></div><div class="label"><div class="t">At the movies</div><div class="c">I love going to the cinema.</div></div></article>
-      <article class="tile g2"><div class="art">📺</div><div class="scrim"></div><div class="label"><div class="t">Series & films</div><div class="c">I watch a LOT of TV series and movies.</div></div></article>
-      <article class="tile g5"><div class="art">🐉</div><div class="scrim"></div><div class="label"><div class="t">C-Drama & K-Drama</div><div class="c">Recently got hooked on these too.</div></div></article>
-      <article class="tile g6"><div class="art">💙</div><div class="scrim"></div><div class="label"><div class="t">When I Fly Towards You</div><div class="c">My current favourite. ⭐</div></div></article>
+    <h2 id="row-watch">What I'm watching</h2>
+    <div class="track" tabindex="0" role="region" aria-labelledby="row-watch">
+      <article class="tile g3"><div class="art" aria-hidden="true">🎬</div><div class="tile-scrim"></div><div class="label"><div class="t">At the movies</div><div class="c">I love going to the cinema.</div></div></article>
+      <article class="tile g2"><div class="art" aria-hidden="true">📺</div><div class="tile-scrim"></div><div class="label"><div class="t">Series & films</div><div class="c">I watch a LOT of TV series and movies.</div></div></article>
+      <article class="tile g5"><div class="art" aria-hidden="true">🐉</div><div class="tile-scrim"></div><div class="label"><div class="t">C-Drama & K-Drama</div><div class="c">Recently got hooked on these too.</div></div></article>
+      <article class="tile g6"><div class="art" aria-hidden="true">💙</div><div class="tile-scrim"></div><div class="label"><div class="t">When I Fly Towards You</div><div class="c">My current favourite. ⭐</div></div></article>
     </div>
   </section>
 
