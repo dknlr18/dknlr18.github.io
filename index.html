@@ -7,16 +7,14 @@
   <meta name="description" content="Dinesh Kumar — software engineer who loves food, badminton, and somehow always flying to India." />
   <style>
     :root {
-      --bg: #0f171e;          /* Prime Video deep navy */
-      --bg-2: #131d26;
-      --surface: #1a252f;     /* card */
-      --surface-2: #20303c;
+      --bg: #0f171e;          /* Prime Video deep navy-black */
+      --bg-2: #0a1117;
+      --surface: #1b2733;
       --border: #2a3a47;
-      --text: #f2f4f6;
-      --muted: #8197a4;
+      --text: #ffffff;
+      --muted: #aab7c4;
       --accent: #1399ff;      /* Prime Video blue */
       --accent-2: #00a8e1;
-      --glow: rgba(19, 153, 255, 0.35);
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -24,129 +22,175 @@
       margin: 0;
       font-family: "Amazon Ember", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       color: var(--text);
-      line-height: 1.7;
+      background: var(--bg);
       -webkit-font-smoothing: antialiased;
-      background:
-        radial-gradient(1200px 600px at 80% -10%, rgba(19,153,255,0.12), transparent 60%),
-        radial-gradient(900px 500px at -10% 10%, rgba(0,168,225,0.10), transparent 55%),
-        linear-gradient(180deg, var(--bg-2), var(--bg) 40%);
-      background-attachment: fixed;
-      min-height: 100vh;
     }
-    .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    a { text-decoration: none; color: inherit; }
 
-    /* Hero */
-    header.hero { padding: 110px 0 36px; }
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--accent); font-weight: 700; margin-bottom: 18px;
+    /* ---- Top nav ---- */
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; gap: 28px;
+      padding: 14px 40px;
+      background: linear-gradient(180deg, rgba(10,17,23,0.95), rgba(10,17,23,0.6) 70%, transparent);
+      backdrop-filter: blur(6px);
     }
-    .eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--accent); border-radius: 2px; }
-    h1 {
-      font-size: clamp(2.6rem, 8vw, 4rem); margin: 0 0 14px; letter-spacing: -0.03em;
-      font-weight: 800; line-height: 1.05;
+    .logo { display: inline-flex; align-items: baseline; gap: 6px; font-weight: 800; font-size: 1.25rem; letter-spacing: -0.01em; }
+    .logo .pv { color: #fff; }
+    .logo .smile { color: var(--accent-2); }
+    nav .menu { display: flex; gap: 22px; color: var(--muted); font-size: 0.92rem; font-weight: 600; }
+    nav .menu a:hover { color: #fff; }
+    @media (max-width: 640px) { nav .menu { display: none; } nav { padding: 12px 20px; } }
+
+    /* ---- Billboard hero ---- */
+    .billboard {
+      position: relative;
+      min-height: 78vh;
+      display: flex; align-items: flex-end;
+      padding: 0 40px 64px;
+      overflow: hidden;
     }
+    .billboard-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(120% 120% at 75% 15%, rgba(19,153,255,0.55), transparent 45%),
+        radial-gradient(90% 90% at 95% 0%, rgba(0,168,225,0.45), transparent 50%),
+        linear-gradient(120deg, #143a5c 0%, #112634 45%, #0a1117 100%);
+    }
+    .billboard-bg::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 30%, rgba(15,23,30,0.6) 70%, var(--bg) 100%),
+                  linear-gradient(90deg, rgba(15,23,30,0.85) 0%, transparent 55%);
+    }
+    .billboard-content { position: relative; z-index: 1; max-width: 640px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #fff; background: rgba(0,168,225,0.18); border: 1px solid var(--accent-2);
+      padding: 5px 12px; border-radius: 6px; margin-bottom: 18px;
+    }
+    .billboard h1 { font-size: clamp(2.8rem, 8vw, 5rem); margin: 0 0 14px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
     .wave { display: inline-block; animation: wave 2.2s ease-in-out infinite; transform-origin: 70% 70%; }
     @keyframes wave { 0%,60%,100%{transform:rotate(0)} 10%{transform:rotate(14deg)} 20%{transform:rotate(-8deg)} 30%{transform:rotate(14deg)} 40%{transform:rotate(-4deg)} 50%{transform:rotate(10deg)} }
-    .lead { font-size: 1.3rem; color: var(--muted); margin: 0; max-width: 36ch; }
-
-    /* Cards */
-    .card {
-      background: linear-gradient(180deg, var(--surface), var(--bg-2));
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 26px 28px;
-      margin: 18px 0;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
-    }
-    .card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 14px 40px var(--glow); }
-    h2 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--accent); margin: 0 0 14px; font-weight: 700; }
-    p { margin: 0 0 14px; font-size: 1.08rem; }
-    p:last-child { margin-bottom: 0; }
-    .accent { color: var(--accent); font-weight: 600; }
-
-    /* About list */
-    ul.about { list-style: none; padding: 0; margin: 0; }
-    ul.about li {
-      padding: 12px 14px; font-size: 1.05rem; display: flex; gap: 14px; align-items: flex-start;
-      border-radius: 10px; transition: background .15s ease;
-    }
-    ul.about li:hover { background: var(--surface-2); }
-    ul.about li .emoji { font-size: 1.4rem; line-height: 1.4; flex-shrink: 0; }
-
-    /* Links / buttons */
-    .links { display: flex; flex-wrap: wrap; gap: 12px; }
+    .x-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; color: var(--muted); font-size: 0.95rem; font-weight: 600; margin-bottom: 16px; }
+    .x-meta .imdb { background: #f5c518; color: #000; font-weight: 800; font-size: 0.72rem; padding: 2px 6px; border-radius: 4px; }
+    .x-meta .sep { opacity: 0.5; }
+    .synopsis { font-size: 1.15rem; line-height: 1.6; color: #e6edf3; margin: 0 0 26px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
     .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 11px 22px; border-radius: 999px; text-decoration: none;
-      font-weight: 700; font-size: 0.98rem; transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 13px 26px; border-radius: 8px; font-weight: 700; font-size: 1rem;
+      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
     }
-    .btn.primary { background: var(--accent); color: #fff; box-shadow: 0 6px 20px var(--glow); }
-    .btn.primary:hover { transform: translateY(-2px); background: var(--accent-2); box-shadow: 0 10px 28px var(--glow); }
-    .btn.ghost { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid var(--border); }
-    .btn.ghost:hover { transform: translateY(-2px); border-color: var(--accent); }
+    .btn.play { background: #fff; color: #0a1117; box-shadow: 0 6px 22px rgba(255,255,255,0.18); }
+    .btn.play:hover { transform: scale(1.04); background: #dbe7f1; }
+    .btn.add { background: rgba(255,255,255,0.16); color: #fff; border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(4px); }
+    .btn.add:hover { transform: scale(1.04); background: rgba(255,255,255,0.26); }
 
-    footer { padding: 44px 0 60px; color: var(--muted); font-size: 0.85rem; text-align: center; }
+    /* ---- Carousel rows ---- */
+    .row { padding: 30px 0 8px; }
+    .row h2 { font-size: 1.25rem; font-weight: 700; margin: 0 0 16px; padding: 0 40px; }
+    .track {
+      display: flex; gap: 14px; overflow-x: auto; padding: 6px 40px 18px;
+      scroll-snap-type: x proximity; scrollbar-width: none;
+    }
+    .track::-webkit-scrollbar { display: none; }
+    .tile {
+      position: relative; flex: 0 0 auto; width: 270px; aspect-ratio: 16/9;
+      border-radius: 12px; overflow: hidden; scroll-snap-align: start;
+      border: 1px solid var(--border);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      cursor: default;
+    }
+    .tile:hover { transform: scale(1.06); z-index: 5; border-color: var(--accent); box-shadow: 0 14px 40px rgba(0,0,0,0.55); }
+    .tile .art { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 3.6rem; }
+    .tile .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.85)); }
+    .tile .label { position: absolute; left: 14px; right: 14px; bottom: 12px; z-index: 2; }
+    .tile .label .t { font-weight: 800; font-size: 1.05rem; }
+    .tile .label .c { font-size: 0.86rem; color: var(--muted); margin-top: 2px; line-height: 1.35; }
+
+    /* tile color themes */
+    .g1 { background: linear-gradient(135deg, #1f6e43, #0d3322); }
+    .g2 { background: linear-gradient(135deg, #1b5fa8, #0c2740); }
+    .g3 { background: linear-gradient(135deg, #8a4b1d, #3a1f0c); }
+    .g4 { background: linear-gradient(135deg, #5b2a86, #251038); }
+    .g5 { background: linear-gradient(135deg, #a83246, #3d0f17); }
+    .g6 { background: linear-gradient(135deg, #2a7d8c, #0d2c33); }
+    .g7 { background: linear-gradient(135deg, #b08400, #3d2c00); }
+
+    footer { padding: 50px 40px 60px; color: var(--muted); font-size: 0.85rem; }
     footer .dot { color: var(--accent); }
+    @media (max-width: 640px) {
+      .billboard { padding: 0 20px 48px; }
+      .row h2, .track, footer { padding-left: 20px; padding-right: 20px; }
+      .track { padding-bottom: 18px; }
+      .tile { width: 220px; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
 
-    <header class="hero">
-      <span class="eyebrow">Software Engineer</span>
-      <h1>Hey, I'm Dinesh <span class="wave">👋</span></h1>
-      <p class="lead">Backend engineer who genuinely loves the messy, scalable stuff.</p>
-    </header>
+  <nav>
+    <span class="logo"><span class="pv">prime</span><span class="smile">video</span></span>
+    <div class="menu">
+      <a href="#about">About</a>
+      <a href="#life">Life</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
 
-    <section class="card">
-      <h2>A bit about me</h2>
-      <p>
-        I'm originally from <span class="accent">Nellore, India</span>, where I spent most of my
-        life. I've been in London for about 4 years now — but India still has my heart, and I love
-        going back every chance I get.
-      </p>
-      <p>
-        In my head I'm always planning these epic long trips to Korea, China, and Japan…
-        and somehow my flight always lands in India. Every. Single. Time. 🙃
-      </p>
-    </section>
-
-    <section class="card">
-      <h2>What I do</h2>
-      <p>
-        I'm a <span class="accent">software engineer at Meta</span>, and before that I was at
-        <span class="accent">Amazon</span>. I love building the systems behind the scenes — the
-        kind that quietly handle a ton of traffic without falling over.
-      </p>
-    </section>
-
-    <section class="card">
-      <h2>Outside of work</h2>
-      <ul class="about">
-        <li><span class="emoji">🏏</span><span>I love cricket… I'm just not very good at it. Watching counts, right?</span></li>
-        <li><span class="emoji">🏸</span><span>Badminton is my actual game — this one I can play.</span></li>
-        <li><span class="emoji">🧗</span><span>Just started bouldering. Still mostly falling, but it's fun.</span></li>
-        <li><span class="emoji">🎮</span><span>I'd love to travel more… in reality I stay lazy at home and play games.</span></li>
-        <li><span class="emoji">🍜</span><span>And above all — I love food.</span></li>
-      </ul>
-    </section>
-
-    <section class="card">
-      <h2>Say hi</h2>
-      <div class="links">
-        <a class="btn primary" href="mailto:dineshkaramsetty@gmail.com">Email me</a>
-        <a class="btn ghost" href="https://www.linkedin.com/in/kdineshk" target="_blank" rel="noopener">LinkedIn</a>
+  <!-- ===== Billboard hero ===== -->
+  <header class="billboard">
+    <div class="billboard-bg"></div>
+    <div class="billboard-content">
+      <span class="badge">★ Featured Title</span>
+      <h1>Dinesh Kumar <span class="wave">👋</span></h1>
+      <div class="x-meta">
+        <span class="imdb">IMDb 8.7</span>
+        <span>2026</span><span class="sep">•</span>
+        <span>Software Engineer</span><span class="sep">•</span>
+        <span>Backend · Badminton · Food</span>
       </div>
-    </section>
+      <p class="synopsis">
+        A software engineer at Meta (ex-Amazon) who loves the messy, scalable stuff behind the
+        scenes. From Nellore, now in London — forever planning trips to Japan, yet somehow always
+        landing back in India.
+      </p>
+      <div class="actions">
+        <a class="btn play" href="mailto:dineshkaramsetty@gmail.com">▶ Email me</a>
+        <a class="btn add" href="https://www.linkedin.com/in/kdineshk" target="_blank" rel="noopener">＋ LinkedIn</a>
+      </div>
+    </div>
+  </header>
 
-    <footer>
-      © <span id="year"></span> Dinesh Kumar <span class="dot">•</span> made with caffeine
-    </footer>
+  <!-- ===== Row: The story so far ===== -->
+  <section class="row" id="about">
+    <h2>The story so far</h2>
+    <div class="track">
+      <article class="tile g2"><div class="art">💻</div><div class="scrim"></div><div class="label"><div class="t">At Meta</div><div class="c">Software engineer building behind-the-scenes systems.</div></div></article>
+      <article class="tile g6"><div class="art">📦</div><div class="scrim"></div><div class="label"><div class="t">ex-Amazon</div><div class="c">Years on Prime Video & subscriptions stacks.</div></div></article>
+      <article class="tile g3"><div class="art">🏡</div><div class="scrim"></div><div class="label"><div class="t">From Nellore</div><div class="c">Spent most of my life in India.</div></div></article>
+      <article class="tile g2"><div class="art">🇬🇧</div><div class="scrim"></div><div class="label"><div class="t">4 years in London</div><div class="c">Current home base.</div></div></article>
+      <article class="tile g5"><div class="art">✈️</div><div class="scrim"></div><div class="label"><div class="t">Always flying to India</div><div class="c">Plan Korea/China/Japan… land in India. Every time. 🙃</div></div></article>
+    </div>
+  </section>
 
-  </div>
+  <!-- ===== Row: Outside of work ===== -->
+  <section class="row" id="life">
+    <h2>Outside of work</h2>
+    <div class="track">
+      <article class="tile g1"><div class="art">🏏</div><div class="scrim"></div><div class="label"><div class="t">Cricket</div><div class="c">Love it… not very good. Watching counts, right?</div></div></article>
+      <article class="tile g6"><div class="art">🏸</div><div class="scrim"></div><div class="label"><div class="t">Badminton</div><div class="c">My actual game — this one I can play.</div></div></article>
+      <article class="tile g3"><div class="art">🧗</div><div class="scrim"></div><div class="label"><div class="t">Bouldering</div><div class="c">Just started. Mostly falling, but it's fun.</div></div></article>
+      <article class="tile g4"><div class="art">🎮</div><div class="scrim"></div><div class="label"><div class="t">Gaming</div><div class="c">Where my "travel plans" actually end up.</div></div></article>
+      <article class="tile g5"><div class="art">🍜</div><div class="scrim"></div><div class="label"><div class="t">Food</div><div class="c">Above all else — I love food.</div></div></article>
+    </div>
+  </section>
+
+  <footer id="contact">
+    © <span id="year"></span> Dinesh Kumar <span class="dot">•</span> made with caffeine
+  </footer>
+
   <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
